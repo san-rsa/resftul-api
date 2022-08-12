@@ -80,31 +80,32 @@ app.route("/articles/:ptitle")
       if (result) {
         res.send(result)
       } else {
-        res.send(err + "Artcle not found")
+        res.send("Artcle not found")
       }
     });
 })
 
 
 .put(function(req, res) {
-  
-  Article.update(
-    {title: req.params.ptitle},
-    {title: req.body.title, content: req.body.content},
-    {overwrite: true},
 
-    function(err){
+  Article.findOneAndUpdate(
+    {title: req.params.ptitle},
+    {title:req.body.title, content:req.body.content},
+    {new: true, overwrite: true},
+
+     function(err){
       if (!err){
-        res.send("successfully edited")
+        res.send("success")
       } else {
         res.send(err)
       }
     });
-})
+}) 
+
 
 
 .patch(function(req, res) {
-  Article.update(
+  Article.updateOne(
     {title: req.params.ptitle},
     {$set: req.body},
     
